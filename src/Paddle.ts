@@ -13,6 +13,19 @@ class Paddle {
     getPosition() {
         return this.position;
     }
+
+    setPosition(x: number, y: number) {
+        this.position.x = x;
+        this.position.y = y;
+    }
+
+    moveUp(value: number) {
+        this.position.y -= value;
+    }
+
+    moveDown(value: number) {
+        this.position.y += value;
+    }
 }
 
 export default Paddle;
