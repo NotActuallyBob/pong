@@ -48,17 +48,17 @@ class Game {
     }
 
     private initBall() {
-        this.ball.setPosition(this.canvas.width / 2, this.canvas.height / 2);
-        this.ball.setSize(this.ballSize, this.ballSize);
+        this.ball.drawable.setPosition(this.canvas.width / 2, this.canvas.height / 2);
+        this.ball.drawable.setSize(this.ballSize, this.ballSize);
         this.ball.initVelocity();
     }
 
     private initPaddles() {
-        this.paddleLeft.setPosition(0, 0);
-        this.paddleLeft.setSize(this.paddleWidth, this.paddleHeight);
+        this.paddleLeft.drawable.setPosition(0, 0);
+        this.paddleLeft.drawable.setSize(this.paddleWidth, this.paddleHeight);
 
-        this.paddleRight.setPosition(this.canvas.width - this.paddleWidth, 0);
-        this.paddleRight.setSize(this.paddleWidth, this.paddleHeight);
+        this.paddleRight.drawable.setPosition(this.canvas.width - this.paddleWidth, 0);
+        this.paddleRight.drawable.setSize(this.paddleWidth, this.paddleHeight);
     }
 
     private restart() {
@@ -74,9 +74,9 @@ class Game {
     public drawAll() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.draw(this.paddleLeft.getDraw());
-        this.draw(this.paddleRight.getDraw());
-        this.draw(this.ball.getDraw());
+        this.draw(this.paddleLeft.drawable.getDraw());
+        this.draw(this.paddleRight.drawable.getDraw());
+        this.draw(this.ball.drawable.getDraw());
     }
 
     public update() {
@@ -85,33 +85,33 @@ class Game {
     }
 
     private checkCollision() {
-        if(this.ball.getPositionTopLeft().y < 0) {
+        if(this.ball.drawable.getPositionTopLeft().y < 0) {
             this.ball.inverseVelocityY();
         }
 
-        if(this.ball.getPositionBottomLeft().y > this.canvas.height) {
+        if(this.ball.drawable.getPositionBottomLeft().y > this.canvas.height) {
             this.ball.inverseVelocityY();
         }
 
-        if(this.paddleLeft.getPositionBottomRight().x > this.ball.getPositionBottomLeft().x &&
-        this.paddleLeft.getPositionTopRight().y <= this.ball.getPositionBottomLeft().y &&
-        this.paddleLeft.getPositionBottomRight().y >= this.ball.getPositionTopLeft().y) {
+        if(this.paddleLeft.drawable.getPositionBottomRight().x > this.ball.drawable.getPositionBottomLeft().x &&
+        this.paddleLeft.drawable.getPositionTopRight().y <= this.ball.drawable.getPositionBottomLeft().y &&
+        this.paddleLeft.drawable.getPositionBottomRight().y >= this.ball.drawable.getPositionTopLeft().y) {
             this.ball.inverseVelocityX();
         }
 
-        if(this.paddleRight.getPositionBottomLeft().x <= this.ball.getPositionBottomRight().x &&
-        this.paddleRight.getPositionTopRight().y <= this.ball.getPositionBottomLeft().y &&
-        this.paddleRight.getPositionBottomRight().y >= this.ball.getPositionTopLeft().y) {
+        if(this.paddleRight.drawable.getPositionBottomLeft().x <= this.ball.drawable.getPositionBottomRight().x &&
+        this.paddleRight.drawable.getPositionTopRight().y <= this.ball.drawable.getPositionBottomLeft().y &&
+        this.paddleRight.drawable.getPositionBottomRight().y >= this.ball.drawable.getPositionTopLeft().y) {
             this.ball.inverseVelocityX();
         }
 
-        if(this.ball.getPositionBottomRight().x < 0) {
+        if(this.ball.drawable.getPositionBottomRight().x < 0) {
             this.scoreLeft++;
             this.scoreLeftHTML.textContent = this.scoreLeft.toString();
             this.restart();
         }
 
-        if(this.ball.getPositionBottomLeft().x > this.canvas.width) {
+        if(this.ball.drawable.getPositionBottomLeft().x > this.canvas.width) {
             this.scoreRight++;
             this.scoreRightHTML.textContent = this.scoreRight.toString();
             this.restart();

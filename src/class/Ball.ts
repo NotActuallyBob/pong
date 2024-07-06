@@ -1,11 +1,13 @@
 import Point from "../model/Point";
 import Drawable from "./Drawable";
 
-class Ball extends Drawable {
+class Ball {
+    public drawable: Drawable;
+
     private velocity: Point;
 
     constructor () {
-        super();
+        this.drawable = new Drawable();
 
         this.velocity = {
             x: 5,
@@ -34,8 +36,8 @@ class Ball extends Drawable {
     }
 
     public update () {
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
+        this.drawable.position.x += this.velocity.x;
+        this.drawable.position.y += this.velocity.y;
     }
 }
 

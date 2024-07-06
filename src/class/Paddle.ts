@@ -1,13 +1,18 @@
 import Drawable from "./Drawable";
 
-class Paddle extends Drawable {
+class Paddle {
+    public drawable: Drawable;
+
+    constructor() {
+        this.drawable = new Drawable();
+    }
 
     moveUp(value: number) {
-        this.position.y -= value;
+        this.drawable.position.y -= value;
     }
 
     moveDown(value: number) {
-        this.position.y += value;
+        this.drawable.position.y += value;
     }
 }
 
