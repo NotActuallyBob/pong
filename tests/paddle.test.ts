@@ -1,4 +1,8 @@
-import Paddle from "../src/Paddle";
+/**
+ * @jest-environment jsdom
+ */
+
+import Paddle from "../src/class/Paddle";
 
 describe('Paddle', () => {
     let paddle: Paddle;
