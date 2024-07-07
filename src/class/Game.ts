@@ -1,4 +1,5 @@
 import Draw from "../model/Draw";
+import Point from "../model/Point";
 import Ball from "./Ball";
 import Input from "./Input";
 import Paddle from "./Paddle";
@@ -8,6 +9,11 @@ class Game {
     public scoreRight = 0;
 
     private canvas: HTMLCanvasElement;
+    private canvasSize: Point = {
+        x: 1200,
+        y: 800
+    };
+
     private context: CanvasRenderingContext2D;
     private scoreLeftHTML: HTMLSpanElement;
     private scoreRightHTML: HTMLSpanElement;
@@ -33,8 +39,8 @@ class Game {
         this.input = new Input();
 
         this.ball = new Ball();
-        this.paddleLeft = new Paddle();
-        this.paddleRight = new Paddle();
+        this.paddleLeft = new Paddle(0, this.canvasSize.y);
+        this.paddleRight = new Paddle(0, this.canvasSize.y);
 
         this.initCanvas();
         this.initBall();
@@ -42,8 +48,8 @@ class Game {
     }
 
     private initCanvas() {
-        this.canvas.width = 1200;
-        this.canvas.height = 600;
+        this.canvas.width = this.canvasSize.x;
+        this.canvas.height = this.canvasSize.y;
         this.canvas.style.border = "1px solid black";
     }
 
@@ -119,6 +125,7 @@ class Game {
     }
 
     private updateMovement() {if(this.input.playerLeftDown()) {
+        console.log('Move Down');
             this.paddleLeft.moveDown(this.paddleSpeed);
         } else if(this.input.playerLeftUp()) {
             this.paddleLeft.moveUp(this.paddleSpeed);

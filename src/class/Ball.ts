@@ -23,6 +23,8 @@ class Ball {
     public initVelocity() {
         if(Math.random() > 0.5) {
             this.goLeft();
+        } else {
+            this.goRight();
         }
 
         if(Math.random() > 0.5) {
