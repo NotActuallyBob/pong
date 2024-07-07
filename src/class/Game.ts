@@ -96,13 +96,13 @@ class Game {
         if(this.paddleLeft.drawable.getPositionBottomRight().x > this.ball.drawable.getPositionBottomLeft().x &&
         this.paddleLeft.drawable.getPositionTopRight().y <= this.ball.drawable.getPositionBottomLeft().y &&
         this.paddleLeft.drawable.getPositionBottomRight().y >= this.ball.drawable.getPositionTopLeft().y) {
-            this.ball.inverseVelocityX();
+            this.ball.goRight();
         }
 
         if(this.paddleRight.drawable.getPositionBottomLeft().x <= this.ball.drawable.getPositionBottomRight().x &&
         this.paddleRight.drawable.getPositionTopRight().y <= this.ball.drawable.getPositionBottomLeft().y &&
         this.paddleRight.drawable.getPositionBottomRight().y >= this.ball.drawable.getPositionTopLeft().y) {
-            this.ball.inverseVelocityX();
+            this.ball.goLeft();
         }
 
         if(this.ball.drawable.getPositionBottomRight().x < 0) {

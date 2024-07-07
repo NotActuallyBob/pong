@@ -6,12 +6,15 @@ class Ball {
 
     private velocity: Point;
 
+    private xVel = 5;
+    private yVel = 2;
+
     constructor () {
         this.drawable = new Drawable();
 
         this.velocity = {
-            x: 5,
-            y: 2
+            x: this.xVel,
+            y: this.yVel
         }
 
         this.initVelocity();
@@ -19,7 +22,7 @@ class Ball {
 
     public initVelocity() {
         if(Math.random() > 0.5) {
-            this.inverseVelocityX()
+            this.goLeft();
         }
 
         if(Math.random() > 0.5) {
@@ -27,8 +30,12 @@ class Ball {
         }
     }
 
-    public inverseVelocityX() {
-        this.velocity.x = -this.velocity.x;
+    public goLeft() {
+        this.velocity.x = -this.xVel;
+    }
+
+    public goRight() {
+        this.velocity.x = this.xVel;
     }
 
     public inverseVelocityY() {
