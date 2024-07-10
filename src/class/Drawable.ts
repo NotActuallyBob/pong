@@ -1,4 +1,4 @@
-import Draw from "../model/Draw";
+import DrawRect from "../model/draw/DrawRect";
 import Point from "../model/Point";
 
 class Drawable {
@@ -30,8 +30,8 @@ class Drawable {
         this.size.y = y;
     }
 
-    public getDraw(): Draw {
-        const draw: Draw = {
+    public getDraw(): DrawRect {
+        const draw: DrawRect = {
             position: {
                 x: this.position.x,
                 y: this.position.y

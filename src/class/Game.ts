@@ -1,20 +1,13 @@
-import Draw from "../model/Draw";
-import Point from "../model/Point";
 import Ball from "./Ball";
+import CanvasManager from "./CanvasManager";
 import Input from "./Input";
 import Paddle from "./Paddle";
 
 class Game {
     public scoreLeft = 0;
     public scoreRight = 0;
+    private canvasManager: CanvasManager;
 
-    private canvas: HTMLCanvasElement;
-    private canvasSize: Point = {
-        x: 1200,
-        y: 800
-    };
-
-    private context: CanvasRenderingContext2D;
     private scoreLeftHTML: HTMLSpanElement;
     private scoreRightHTML: HTMLSpanElement;
 
@@ -29,32 +22,23 @@ class Game {
     private paddleWidth: number = 30;
     private paddleHeight: number = 200;
 
-    constructor() {
-        this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    constructor(canvasManager: CanvasManager) {
+        this.canvasManager = canvasManager;
         this.scoreLeftHTML = document.getElementById('scoreLeft') as HTMLSpanElement;
         this.scoreRightHTML = document.getElementById('scoreRight') as HTMLSpanElement;
-
-        this.context = this.canvas.getContext("2d")!;
 
         this.input = new Input();
 
         this.ball = new Ball();
-        this.paddleLeft = new Paddle(0, this.canvasSize.y);
-        this.paddleRight = new Paddle(0, this.canvasSize.y);
+        this.paddleLeft = new Paddle(0, this.canvasManager.getCanvasSize().y);
+        this.paddleRight = new Paddle(0, this.canvasManager.getCanvasSize().y);
 
-        this.initCanvas();
         this.initBall();
         this.initPaddles();
     }
 
-    private initCanvas() {
-        this.canvas.width = this.canvasSize.x;
-        this.canvas.height = this.canvasSize.y;
-        this.canvas.style.border = "1px solid black";
-    }
-
     private initBall() {
-        this.ball.drawable.setPosition(this.canvas.width / 2, this.canvas.height / 2);
+        this.ball.drawable.setPosition(this.canvasManager.getCanvasSize().x / 2, this.canvasManager.getCanvasSize().y / 2);
         this.ball.drawable.setSize(this.ballSize, this.ballSize);
         this.ball.initVelocity();
     }
@@ -63,7 +47,7 @@ class Game {
         this.paddleLeft.drawable.setPosition(0, 0);
         this.paddleLeft.drawable.setSize(this.paddleWidth, this.paddleHeight);
 
-        this.paddleRight.drawable.setPosition(this.canvas.width - this.paddleWidth, 0);
+        this.paddleRight.drawable.setPosition(this.canvasManager.getCanvasSize().x - this.paddleWidth, 0);
         this.paddleRight.drawable.setSize(this.paddleWidth, this.paddleHeight);
     }
 
@@ -71,18 +55,12 @@ class Game {
         this.initBall();
     }
 
-    private draw(draw: Draw) {
-        this.context.beginPath();
-        this.context.rect(draw.position.x, draw.position.y, draw.size.x, draw.size.y);
-        this.context.fill();
-    }
-
     public drawAll() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.canvasManager.clear();
 
-        this.draw(this.paddleLeft.drawable.getDraw());
-        this.draw(this.paddleRight.drawable.getDraw());
-        this.draw(this.ball.drawable.getDraw());
+        this.canvasManager.drawRect(this.paddleLeft.drawable.getDraw());
+        this.canvasManager.drawRect(this.paddleRight.drawable.getDraw());
+        this.canvasManager.drawRect(this.ball.drawable.getDraw());
     }
 
     public update() {
@@ -95,7 +73,7 @@ class Game {
             this.ball.inverseVelocityY();
         }
 
-        if(this.ball.drawable.getPositionBottomLeft().y > this.canvas.height) {
+        if(this.ball.drawable.getPositionBottomLeft().y > this.canvasManager.getCanvasSize().y) {
             this.ball.inverseVelocityY();
         }
 
@@ -117,7 +95,7 @@ class Game {
             this.restart();
         }
 
-        if(this.ball.drawable.getPositionBottomLeft().x > this.canvas.width) {
+        if(this.ball.drawable.getPositionBottomLeft().x > this.canvasManager.getCanvasSize().x) {
             this.scoreRight++;
             this.scoreRightHTML.textContent = this.scoreRight.toString();
             this.restart();
